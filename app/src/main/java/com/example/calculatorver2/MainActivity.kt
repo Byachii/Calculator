@@ -18,6 +18,8 @@ private lateinit var multiplyButton: Button
 
 class MainActivity : AppCompatActivity() {
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -38,138 +40,148 @@ class MainActivity : AppCompatActivity() {
         var minusIsClicked = false
         var multiplyIsClicked = false
         var sNumber = 0
+        var n = 0
+        var isNumberUsed = false
 
-        oneButton.setOnClickListener{
+        fun createNumber() {
             if(isCounted){
                 answerText.text = ""
                 isCounted = false
             }
             number = answerText.text
-            answerText.setText("$number" + "1")
+            answerText.setText("$number" + "$n")
+            isNumberUsed = true
+        }
+
+        oneButton.setOnClickListener{
+            n = 1
+            createNumber()
         }
 
         twoButton.setOnClickListener{
-            if(isCounted){
-                answerText.text = ""
-                isCounted = false
-            }
-
-            number = answerText.text
-            answerText.setText("$number" + "2")
+            n = 2
+            createNumber()
         }
 
         threeButton.setOnClickListener{
-            if(isCounted){
-                answerText.text = ""
-                isCounted = false
-            }
-
-            number = answerText.text
-            answerText.setText("$number" + "3")
+            n = 3
+            createNumber()
         }
 
+
         plusButton.setOnClickListener{
-           if(minusIsClicked){
-               number = answerText.text
-               score -= number.toString().toInt(10)
-               answerText.setText("")
-               minusIsClicked = false
-               plusIsClicked = true
-           } else if(multiplyIsClicked){
-               number = answerText.text
-               score = (number.toString().toInt()) * sNumber
-               answerText.setText("")
-               multiplyIsClicked = false
-               plusIsClicked = true
-           } else {
-               number = answerText.text
-               score += number.toString().toInt(10)
-               answerText.setText("")
-               plusIsClicked = true
-           }
+            if(isNumberUsed) {
+                if (minusIsClicked) {
+                    number = answerText.text
+                    score -= number.toString().toInt(10)
+                    answerText.setText("")
+                    minusIsClicked = false
+                    plusIsClicked = true
+                } else if (multiplyIsClicked) {
+                    number = answerText.text
+                    score = (number.toString().toInt()) * sNumber
+                    answerText.setText("")
+                    multiplyIsClicked = false
+                    plusIsClicked = true
+                } else {
+                    number = answerText.text
+                    score += number.toString().toInt(10)
+                    answerText.setText("")
+                    plusIsClicked = true
+                }
+            }
         }
 
         minusButton.setOnClickListener {
-            if(plusIsClicked) {
-                number = answerText.text
-                score += number.toString().toInt(10)
-                answerText.setText("")
-                plusIsClicked = false
-                minusIsClicked = true
-            } else if (minusIsClicked) {
-                number = answerText.text
-                score -= number.toString().toInt(10)
-                answerText.setText("")
-                minusIsClicked = true
-            } else if(multiplyIsClicked){
-                number = answerText.text
-                score = (number.toString().toInt()) * sNumber
-                answerText.setText("")
-                multiplyIsClicked = false
-                minusIsClicked = true
-            } else {
-                number = answerText.text
-                score = number.toString().toInt(10)
-                answerText.setText("")
-                minusIsClicked = true
+            if(isNumberUsed) {
+                if (plusIsClicked) {
+                    number = answerText.text
+                    score += number.toString().toInt(10)
+                    answerText.setText("")
+                    plusIsClicked = false
+                    minusIsClicked = true
+                } else if (minusIsClicked) {
+                    number = answerText.text
+                    score -= number.toString().toInt(10)
+                    answerText.setText("")
+                    minusIsClicked = true
+                } else if (multiplyIsClicked) {
+                    number = answerText.text
+                    score = (number.toString().toInt()) * sNumber
+                    answerText.setText("")
+                    multiplyIsClicked = false
+                    minusIsClicked = true
+                } else {
+                    number = answerText.text
+                    score = number.toString().toInt(10)
+                    answerText.setText("")
+                    minusIsClicked = true
+                }
             }
-
         }
 
         multiplyButton.setOnClickListener {
-            if (multiplyIsClicked) {
-                number = answerText.text
-                score = (number.toString().toInt()) * sNumber
-                answerText.setText("")
-                multiplyIsClicked = true
-            } else if (plusIsClicked) {
-                number = answerText.text
-                score += number.toString().toInt(10)
-                answerText.setText("")
-                plusIsClicked = false
-                multiplyIsClicked = true
-            } else if(minusIsClicked){
-                number = answerText.text
-                score -= number.toString().toInt(10)
-                answerText.setText("")
-                minusIsClicked = false
-                multiplyIsClicked = true
-                number = answerText.text
-                sNumber = number.toString().toInt()
-            } else {
-                number = answerText.text
-                sNumber = number.toString().toInt()
-                score = number.toString().toInt()
-                answerText.setText("")
-                multiplyIsClicked = true
-            }
+           if(isNumberUsed) {
+               if (multiplyIsClicked) {
+                   number = answerText.text
+                   score = (number.toString().toInt()) * sNumber
+                   answerText.setText("")
+                   multiplyIsClicked = true
+               } else if (plusIsClicked) {
+                   number = answerText.text
+                   score += number.toString().toInt(10)
+                   answerText.setText("")
+                   plusIsClicked = false
+                   multiplyIsClicked = true
+               } else if (minusIsClicked) {
+                   number = answerText.text
+                   score -= number.toString().toInt(10)
+                   answerText.setText("")
+                   minusIsClicked = false
+                   multiplyIsClicked = true
+                   number = answerText.text
+                   sNumber = number.toString().toInt()
+               } else {
+                   number = answerText.text
+                   sNumber = number.toString().toInt()
+                   score = number.toString().toInt()
+                   answerText.setText("")
+                   multiplyIsClicked = true
+               }
+           }
         }
 
         equalButton.setOnClickListener {
-            when {
-                plusIsClicked -> {
-                    number = answerText.text
-                    score += number.toString().toInt(10)
-                    plusIsClicked = false
-                }
-                minusIsClicked -> {
-                    number = answerText.text
-                    score -= number.toString().toInt(10)
-                    minusIsClicked = false
-                }
-                multiplyIsClicked -> {
-                    number = answerText.text
-                    score = (number.toString().toInt()) * sNumber
-                    multiplyIsClicked = false
-                } else -> {
-                    number = answerText.text
-                    score = number.toString().toInt(10)
-                }
-            }
-            answerText.text = "$score"
-            number = ""
-            score = 0
-            isCounted = true
+          if(isNumberUsed) {
+              when {
+                  plusIsClicked -> {
+                      if (answerText.text != "") {
+                          number = answerText.text
+                          score += number.toString().toInt(10)
+                          plusIsClicked = false
+                      }
+                  }
+                  minusIsClicked -> {
+                      number = answerText.text
+                      score -= number.toString().toInt(10)
+                      minusIsClicked = false
+                  }
+                  multiplyIsClicked -> {
+                      number = answerText.text
+                      score = (number.toString().toInt()) * sNumber
+                      multiplyIsClicked = false
+                  }
+                  else -> {
+                      number = answerText.text
+                      score = number.toString().toInt(10)
+                  }
+              }
+
+              answerText.text = "$score"
+              number = ""
+              score = 0
+              isCounted = true
+          }
         }
 
         cancelButton.setOnClickListener{
@@ -177,6 +189,7 @@ class MainActivity : AppCompatActivity() {
             number = ""
             answerText.text = ""
             isCounted = false
+            isNumberUsed = false
         }
     }
 }
