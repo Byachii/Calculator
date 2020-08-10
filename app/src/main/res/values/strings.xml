@@ -9,4 +9,5 @@
     <string name="equals">=</string>
     <string name="cancel_button">C</string>
     <string name="multiply_button">*</string>
+    <string name="dot_button">.</string>
 </resources>
