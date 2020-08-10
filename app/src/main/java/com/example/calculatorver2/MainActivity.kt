@@ -120,7 +120,7 @@ class MainActivity : AppCompatActivity() {
                     else -> {
                         number = answerText.text
                         score = number.toString().toInt(10)
-                        answerText.setText("")
+                        answerText.text = ""
                         minusIsClicked = true
 
                     }
@@ -129,18 +129,18 @@ class MainActivity : AppCompatActivity() {
         }
 
         multiplyButton.setOnClickListener {
-            if (answerText.text != "") {
+            if(answerText.text != "") {
                 when {
                     multiplyIsClicked -> {
                         number = answerText.text
                         score *= number.toString().toInt()
-                        answerText.setText("")
+                        answerText.text = ""
                         multiplyIsClicked = true
                     }
                     plusIsClicked -> {
                         number = answerText.text
                         score += number.toString().toInt(10)
-                        answerText.setText("")
+                        answerText.text = ""
                         plusIsClicked = false
                         multiplyIsClicked = true
                     }
@@ -169,12 +169,14 @@ class MainActivity : AppCompatActivity() {
                         number = answerText.text
                         score += number.toString().toInt(10)
                         plusIsClicked = false
+                        answerText.text = ""
                     }
                     minusIsClicked -> {
 
                         number = answerText.text
                         score -= number.toString().toInt(10)
                         minusIsClicked = false
+                        answerText.text = ""
 
                     }
                     multiplyIsClicked -> {
@@ -182,17 +184,22 @@ class MainActivity : AppCompatActivity() {
                         number = answerText.text
                         score *= number.toString().toInt()
                         multiplyIsClicked = false
+                        answerText.text = ""
                     }
                     else -> {
                         number = answerText.text
                         score = number.toString().toInt(10)
+                        answerText.text = ""
                     }
                 }
-                }
+               }
                 answerText.text = "$score"
                 number = ""
                 score = 0
                 isCounted = true
+                plusIsClicked = false
+                minusIsClicked = false
+                multiplyIsClicked = false
 
         }
 
@@ -201,6 +208,9 @@ class MainActivity : AppCompatActivity() {
             number = ""
             answerText.text = ""
             isCounted = false
+            plusIsClicked = false
+            minusIsClicked = false
+            multiplyIsClicked = false
         }
     }
 }
