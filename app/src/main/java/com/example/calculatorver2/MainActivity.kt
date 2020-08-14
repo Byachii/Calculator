@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 
+
 private lateinit var plusButton: Button
 private lateinit var minusButton: Button
 private lateinit var oneButton: Button
@@ -24,6 +25,9 @@ private lateinit var nineButton: Button
 private lateinit var zeroButton: Button
 private lateinit var divideButton: Button
 
+enum class Calculations {
+    PLUS, MINUS, MULTIPLY, DIVIDE, NONE
+}
 
 class MainActivity : AppCompatActivity() {
 
@@ -53,13 +57,9 @@ class MainActivity : AppCompatActivity() {
 
         var number = answerText.text
         var score = 0f
-        var plusIsClicked = false
         var isCounted = false
-        var minusIsClicked = false
-        var multiplyIsClicked = false
-        var dotIsClicked = false
-        var divideIsClicked = false
         var n = 0
+        var enumValue = Calculations.NONE
 
        fun createNumber() {
             if(isCounted){
@@ -122,231 +122,80 @@ class MainActivity : AppCompatActivity() {
 
         dotButton.setOnClickListener {
             if(answerText.text != ""){
-                if(!dotIsClicked) {
+                if(!answerText.text.contains(".")) {
                  number = answerText.text
                  answerText.setText("$number" + ".")
-                 dotIsClicked = true
                 }
             }
         }
 
-        plusButton.setOnClickListener {
-            if (answerText.text != "") when {
-                minusIsClicked -> {
-                    number = answerText.text
-                    score -= number.toString().toFloat()
-                    answerText.setText("")
-                    minusIsClicked = false
-                    plusIsClicked = true
-                    dotIsClicked = false
-                }
-                multiplyIsClicked -> {
-                    number = answerText.text
-                    score *= number.toString().toFloat()
-                    answerText.setText("")
-                    multiplyIsClicked = false
-                    plusIsClicked = true
-                    dotIsClicked = false
-                }
-                divideIsClicked -> {
-                    number = answerText.text
-                    score /= number.toString().toFloat()
-                    answerText.text = ""
-                    divideIsClicked = false
-                    plusIsClicked = true
-                    dotIsClicked = false
-                }
-                else -> {
+        fun Calculate(){
+            when (enumValue) {
+                Calculations.PLUS -> {
                     number = answerText.text
                     score += number.toString().toFloat()
                     answerText.setText("")
-                    plusIsClicked = true
-                    dotIsClicked = false
-
                 }
+                Calculations.MINUS -> {
+                    number = answerText.text
+                    score -= number.toString().toFloat()
+                    answerText.setText("")
+                }
+                Calculations.MULTIPLY -> {
+                    number = answerText.text
+                    score *= number.toString().toFloat()
+                    answerText.setText("")
+                }
+                Calculations.DIVIDE -> {
+                    number = answerText.text
+                    score /= number.toString().toFloat()
+                    answerText.text = ""
+                }
+                Calculations.NONE -> {
+                    number = answerText.text
+                    score = number.toString().toFloat()
+                    answerText.text = ""
+                }
+            }
+        }
+        plusButton.setOnClickListener {
+            if (answerText.text != "") {
+                Calculate()
+                enumValue = Calculations.PLUS
             }
         }
 
         minusButton.setOnClickListener {
-            if(answerText.text != "") when {
-                plusIsClicked -> {
-                    number = answerText.text
-                    score += number.toString().toFloat()
-                    answerText.setText("")
-                    plusIsClicked = false
-                    minusIsClicked = true
-                    dotIsClicked = false
-                }
-                minusIsClicked -> {
-                    number = answerText.text
-                    score -= number.toString().toFloat()
-                    answerText.setText("")
-                    minusIsClicked = true
-                    dotIsClicked = false
-                }
-                multiplyIsClicked -> {
-                    number = answerText.text
-                    score *= number.toString().toFloat()
-                    answerText.setText("")
-                    multiplyIsClicked = false
-                    minusIsClicked = true
-                    dotIsClicked = false
-                }
-                divideIsClicked -> {
-                    number = answerText.text
-                    score /= number.toString().toFloat()
-                    answerText.text = ""
-                    divideIsClicked = false
-                    minusIsClicked = true
-                    dotIsClicked = false
-                }
-                else -> {
-                    number = answerText.text
-                    score = number.toString().toFloat()
-                    answerText.text = ""
-                    minusIsClicked = true
-                    dotIsClicked = false
-
-                }
+            if(answerText.text != "") {
+                Calculate()
+                enumValue = Calculations.MINUS
             }
         }
 
         multiplyButton.setOnClickListener {
-            if(answerText.text != "") when {
-                multiplyIsClicked -> {
-                    number = answerText.text
-                    score *= number.toString().toFloat()
-                    answerText.text = ""
-                    multiplyIsClicked = true
-                    dotIsClicked = false
-                }
-                plusIsClicked -> {
-                    number = answerText.text
-                    score += number.toString().toFloat()
-                    answerText.text = ""
-                    plusIsClicked = false
-                    multiplyIsClicked = true
-                    dotIsClicked = false
-                }
-                minusIsClicked -> {
-                    number = answerText.text
-                    score -= number.toString().toFloat()
-                    answerText.text = ""
-                    minusIsClicked = false
-                    multiplyIsClicked = true
-                    dotIsClicked = false
-                }
-                divideIsClicked -> {
-                    number = answerText.text
-                    score /= number.toString().toFloat()
-                    answerText.text = ""
-                    divideIsClicked = false
-                    multiplyIsClicked = true
-                    dotIsClicked = false
-                }
-                else -> {
-                    number = answerText.text
-                    score = number.toString().toFloat()
-                    answerText.text = ""
-                    multiplyIsClicked = true
-                    dotIsClicked = false
-                }
+            if(answerText.text != "") {
+                Calculate()
+                enumValue = Calculations.MULTIPLY
             }
         }
 
         divideButton.setOnClickListener {
-            if(answerText.text != "") when {
-                multiplyIsClicked -> {
-                    number = answerText.text
-                    score *= number.toString().toFloat()
-                    answerText.text = ""
-                    divideIsClicked = true
-                    multiplyIsClicked = false
-                    dotIsClicked = false
-                }
-                plusIsClicked -> {
-                    number = answerText.text
-                    score += number.toString().toFloat()
-                    answerText.text = ""
-                    plusIsClicked = false
-                    divideIsClicked = true
-                    dotIsClicked = false
-                }
-                minusIsClicked -> {
-                    number = answerText.text
-                    score -= number.toString().toFloat()
-                    answerText.text = ""
-                    minusIsClicked = false
-                    divideIsClicked = true
-                    dotIsClicked = false
-                }
-                divideIsClicked -> {
-                    number = answerText.text
-                    score /= number.toString().toFloat()
-                    answerText.text = ""
-                    divideIsClicked = true
-                    dotIsClicked = false
-                }
-                else -> {
-                    number = answerText.text
-                    score = number.toString().toFloat()
-                    answerText.text = ""
-                    divideIsClicked = true
-                    dotIsClicked = false
-                }
+            if(answerText.text != "") {
+                Calculate()
+                enumValue = Calculations.DIVIDE
             }
         }
 
         equalButton.setOnClickListener {
                if(answerText.text != ""){
-                when {
-                    plusIsClicked -> {
-                        number = answerText.text
-                        score += number.toString().toFloat()
-                        plusIsClicked = false
-                        dotIsClicked = false
-                        answerText.text = ""
-                    }
-                    minusIsClicked -> {
-                        number = answerText.text
-                        score -= number.toString().toFloat()
-                        minusIsClicked = false
-                        dotIsClicked = false
-                        answerText.text = ""
-
-                    }
-                    multiplyIsClicked -> {
-                        number = answerText.text
-                        score *= number.toString().toFloat()
-                        multiplyIsClicked = false
-                        dotIsClicked = false
-                        answerText.text = ""
-                    }
-                    divideIsClicked -> {
-                        number = answerText.text
-                        score /= number.toString().toFloat()
-                        divideIsClicked = false
-                        dotIsClicked = false
-                        answerText.text = ""
-                    }
-                    else -> {
-                        number = answerText.text
-                        score = number.toString().toFloat()
-                        dotIsClicked = false
-                        answerText.text = ""
-                    }
-                }
+               Calculate()
                }
                 var s = String.format("%.2f", score)
                 answerText.text = "$s"
                 number = ""
                 score = 0f
                 isCounted = true
-                plusIsClicked = false
-                minusIsClicked = false
-                multiplyIsClicked = false
-                divideIsClicked = false
-                dotIsClicked = false
+                enumValue = Calculations.NONE
 
         }
 
@@ -355,11 +204,8 @@ class MainActivity : AppCompatActivity() {
             number = ""
             answerText.text = ""
             isCounted = false
-            plusIsClicked = false
-            minusIsClicked = false
-            multiplyIsClicked = false
-            divideIsClicked = false
-            dotIsClicked = false
+            enumValue = Calculations.NONE
         }
+
     }
 }
