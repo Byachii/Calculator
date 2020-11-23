@@ -121,7 +121,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         dotButton.setOnClickListener {
-            if(answerText.text != ""){
+            if(answerText.text != "" && answerText.text != "-"){
                 if(!answerText.text.contains(".")) {
                  number = answerText.text
                  answerText.setText("$number" + ".")
@@ -159,7 +159,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         plusButton.setOnClickListener {
-            if (answerText.text != "") {
+            if (answerText.text != "" && answerText.text != "-") {
                 Calculate()
                 enumValue = Calculations.PLUS
             }
@@ -167,27 +167,31 @@ class MainActivity : AppCompatActivity() {
 
         minusButton.setOnClickListener {
             if(answerText.text != "") {
-                Calculate()
-                enumValue = Calculations.MINUS
+                if(answerText.text !== "-") {
+                    Calculate()
+                    enumValue = Calculations.MINUS
+                }
+            } else if(answerText.text == ""){
+                answerText.text = "-"
             }
         }
 
         multiplyButton.setOnClickListener {
-            if(answerText.text != "") {
+            if(answerText.text != "" && answerText.text != "-") {
                 Calculate()
                 enumValue = Calculations.MULTIPLY
             }
         }
 
         divideButton.setOnClickListener {
-            if(answerText.text != "") {
+            if(answerText.text != "" && answerText.text != "-") {
                 Calculate()
                 enumValue = Calculations.DIVIDE
             }
         }
 
         equalButton.setOnClickListener {
-               if(answerText.text != ""){
+               if(answerText.text != "" && answerText.text != "-"){
                Calculate()
                }
                 var s = String.format("%.2f", score)
